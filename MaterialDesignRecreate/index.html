@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <!-- JQUERY -->
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- IMPORT ROBOTO -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      // OFFSET TO CORRECT THE POSITION OF THE RIPPLE (HALF THE WIDTH PLUS 8PX)
+      var offset = 133;
+
+      // FUNCTION THAT TAKES THE POSIITION OF THE CURSOR
+      // AND POSITIONS THE RIPPLE RIGHT UNDER IT
+      function getPos(event) {
+        var x = event.clientX;
+        var y = event.clientY;
+
+        $(".ripple").css("left", "calc(" + x + "px - " + offset + "px)");
+        $(".ripple").css("top", "calc(" + y + "px - " + offset + "px)");
+      }
+
+      // FUNCTION THAT HANDLES THE BEHAVIOR OF THE RIPPLE
+      // WHEN THW BUTTON IS PRESSED
+      function setSize(event) {
+        offset = 133;
+        $(".ripple").css("transition", "0s");
+        getPos(event);
+
+        $(".ripple").css("opacity", "0.2");
+        $(".ripple").css("transition", "ease-out 0.5s");
+        $(".ripple").css("width", "250px");
+        $(".ripple").css("height", "250px");
+      }
+
+      // FUNCTION THAT IS CALLED WHEN THE BUTTON IS RELEASED
+      // AND RESETS ALL THE CHANGED ATTRIBUTES OF THE RIPPLE
+      function reset(event) {
+        offset = 8;
+        getPos(event);
+        $(".ripple").css("width", "0px");
+        $(".ripple").css("height", "0px");
+        $(".ripple").css("opacity", "0");
+      }
+    </script>
+    <style>
+      * {
+        transition: ease-in-out 0.5s;
+      }
+      .ripple-button {
+        margin: 2px;
+        position: relative;
+        background: #4285f4;
+        border: none;
+        border-radius: 2px;
+        width: auto;
+        height: 36px;
+        overflow: hidden;
+        transition: 0.2s;
+      }
+      .ripple-text {
+        color: white;
+        font-family: "Roboto", sans-serif;
+        font-weight: 500;
+        font-size: 14pt;
+        padding: 16px;
+      }
+      .ripple {
+        width: 0px;
+        height: 0px;
+        opacity: 0.2;
+        position: absolute;
+        display: block;
+        border-radius: 50%;
+        transition: ease-in-out 0.3s;
+        top: 50%;
+        left: 50%;
+        background: white;
+      }
+    </style>
+  </head>
+  <body onmouseup="reset(event)">
+    <button
+      class="ripple-button"
+      onmousedown="setSize(event)"
+      onmousemove="getPos(event)"
+    >
+      <span class="ripple"></span>
+      <span class="ripple-text">BUTTON</span>
+    </button>
+  </body>
+</html>
